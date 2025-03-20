@@ -1,118 +1,118 @@
 import React, { useState, useEffect } from "react";
 import { TableContainer, Table, TableHead, TableRow, TableCell, Paper, TableBody, Button, TextField } from "@mui/material";
-import Car from "./components/car";
+import Music from "./components/music";  // Music 컴포넌트를 import
 
 function App() {
-  const [cars, setCars] = useState([]);  // 자동차 데이터를 저장할 상태 변수
-  const [newCar, setNewCar] = useState({
-    make: '',
-    model: '',
-    year: '',
+  const [musics, setMusics] = useState([]);  // 음악 데이터를 저장할 상태 변수
+  const [newMusic, setNewMusic] = useState({
+    title: '',
+    artist: '',
+    album: '',
     image: '',
     price: '',
   });
 
-  // 자동차 데이터 가져오기
+  // 음악 데이터 가져오기
   useEffect(() => {
-    fetch('https://capstoneserver-production.up.railway.app/api/cars')  // 서버 URL 수정
+    fetch('https://capstoneserver-production.up.railway.app/api/music')  // 음악 관련 API URL
       .then(response => response.json())
-      .then(data => setCars(data))
-      .catch(error => console.error('Error fetching cars:', error));
+      .then(data => setMusics(data))
+      .catch(error => console.error('Error fetching musics:', error));
   }, []);
 
-  // 자동차 추가
-  const handleAddCar = () => {
-    fetch('https://capstoneserver-production.up.railway.app/api/cars', {  // 서버 URL 수정
+  // 음악 추가
+  const handleAddMusic = () => {
+    fetch('https://capstoneserver-production.up.railway.app/api/music', {  // 음악 관련 API URL
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newCar),
+      body: JSON.stringify(newMusic),
     })
       .then(response => response.json())
       .then(data => {
         alert(data.message);
-        setNewCar({ make: '', model: '', year: '', image: '', price: '' });  // 입력 필드 초기화
-        fetchCars();  // 데이터 다시 가져오기
+        setNewMusic({ title: '', artist: '', album: '', image: '', price: '' });  // 입력 필드 초기화
+        fetchMusics();  // 데이터 다시 가져오기
       })
-      .catch(error => console.error('Error adding car:', error));
+      .catch(error => console.error('Error adding music:', error));
   };
 
-  // 자동차 삭제
-  const handleDeleteCar = (id) => {
-    fetch(`https://capstoneserver-production.up.railway.app/api/cars/${id}`, { method: 'DELETE' })  // 서버 URL 수정
+  // 음악 삭제
+  const handleDeleteMusic = (id) => {
+    fetch(`https://capstoneserver-production.up.railway.app/api/music/${id}`, { method: 'DELETE' })  // 음악 관련 API URL
       .then(response => response.json())
       .then(data => {
         alert(data.message);
-        fetchCars();  // 데이터 다시 가져오기
+        fetchMusics();  // 데이터 다시 가져오기
       })
-      .catch(error => console.error('Error deleting car:', error));
+      .catch(error => console.error('Error deleting music:', error));
   };
 
-  // 자동차 목록 다시 가져오기
-  const fetchCars = () => {
-    fetch('https://capstoneserver-production.up.railway.app/api/cars')  // 서버 URL 수정
+  // 음악 목록 다시 가져오기
+  const fetchMusics = () => {
+    fetch('https://capstoneserver-production.up.railway.app/api/music')  // 음악 관련 API URL
       .then(response => response.json())
-      .then(data => setCars(data))
-      .catch(error => console.error('Error fetching cars:', error));
+      .then(data => setMusics(data))
+      .catch(error => console.error('Error fetching musics:', error));
   };
 
   return (
     <div>
-      <h1>자동차 목록</h1>
+      <h1>음악 목록</h1>
       
-      {/* 자동차 추가 폼 */}
+      {/* 음악 추가 폼 */}
       <div>
         <TextField
-          label="Make"
-          value={newCar.make}
-          onChange={e => setNewCar({ ...newCar, make: e.target.value })}
+          label="Title"
+          value={newMusic.title}
+          onChange={e => setNewMusic({ ...newMusic, title: e.target.value })}
         />
         <TextField
-          label="Model"
-          value={newCar.model}
-          onChange={e => setNewCar({ ...newCar, model: e.target.value })}
+          label="Artist"
+          value={newMusic.artist}
+          onChange={e => setNewMusic({ ...newMusic, artist: e.target.value })}
         />
         <TextField
-          label="Year"
-          value={newCar.year}
-          onChange={e => setNewCar({ ...newCar, year: e.target.value })}
+          label="Album"
+          value={newMusic.album}
+          onChange={e => setNewMusic({ ...newMusic, album: e.target.value })}
         />
         <TextField
           label="Image URL"
-          value={newCar.image}
-          onChange={e => setNewCar({ ...newCar, image: e.target.value })}
+          value={newMusic.image}
+          onChange={e => setNewMusic({ ...newMusic, image: e.target.value })}
         />
         <TextField
           label="Price"
-          value={newCar.price}
-          onChange={e => setNewCar({ ...newCar, price: e.target.value })}
+          value={newMusic.price}
+          onChange={e => setNewMusic({ ...newMusic, price: e.target.value })}
         />
-        <Button onClick={handleAddCar}>자동차 추가</Button>
+        <Button onClick={handleAddMusic}>음악 추가</Button>
       </div>
 
-      {/* 자동차 목록 테이블 */}
+      {/* 음악 목록 테이블 */}
       <TableContainer sx={{ width: '100%', marginTop: '30px' }} component={Paper}>
         <Table sx={{ minWidth: '1080px' }}>
           <TableHead>
             <TableRow>
-              <TableCell>Make</TableCell>
-              <TableCell>Model</TableCell>
-              <TableCell>Year</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Artist</TableCell>
+              <TableCell>Album</TableCell>
               <TableCell>Image</TableCell>
               <TableCell>Price</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {cars.map((car) => (
-              <Car 
-                key={car.id} 
-                id={car.id} 
-                make={car.make} 
-                model={car.model} 
-                year={car.year} 
-                image={car.image} 
-                price={car.price}
-                onDelete={handleDeleteCar}
+            {musics.map((music) => (
+              <Music 
+                key={music.id} 
+                id={music.id} 
+                title={music.title} 
+                artist={music.artist} 
+                album={music.album} 
+                image={music.image} 
+                price={music.price}
+                onDelete={handleDeleteMusic}
               />
             ))}
           </TableBody>
