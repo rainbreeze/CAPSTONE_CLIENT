@@ -15,7 +15,7 @@ function App() {
 
   // 자동차 데이터 가져오기
   useEffect(() => {
-    fetch('http://localhost:5000/api/cars')
+    fetch('http://capstone_server.railway.internal/api/cars') // Railway 서버 주소로 변경
       .then(response => response.json())
       .then(data => setCars(data))
       .catch(error => console.error('Error fetching cars:', error));
@@ -23,7 +23,7 @@ function App() {
 
   // 자동차 추가
   const handleAddCar = () => {
-    fetch('http://localhost:5000/api/cars', {
+    fetch('http://capstone_server.railway.internal/api/cars', { // Railway 서버 주소로 변경
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newCar),
@@ -39,7 +39,7 @@ function App() {
 
   // 자동차 삭제
   const handleDeleteCar = (id) => {
-    fetch(`http://localhost:5000/api/cars/${id}`, { method: 'DELETE' })
+    fetch(`http://capstone_server.railway.internal/api/cars/${id}`, { method: 'DELETE' })  // Railway 서버 주소로 변경
       .then(response => response.json())
       .then(data => {
         alert(data.message);
@@ -50,7 +50,7 @@ function App() {
 
   // 자동차 목록 다시 가져오기
   const fetchCars = () => {
-    fetch('http://localhost:5000/api/cars')
+    fetch('http://capstone_server.railway.internal/api/cars') // Railway 서버 주소로 변경
       .then(response => response.json())
       .then(data => setCars(data))
       .catch(error => console.error('Error fetching cars:', error));
