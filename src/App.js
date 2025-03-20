@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { TableContainer, Table, TableHead, TableRow, TableCell, Paper, TableBody, Button, TextField } from "@mui/material";
 import Car from "./components/car";
 
-// 서버에서 자동차 데이터를 가져오기
 function App() {
   const [cars, setCars] = useState([]);  // 자동차 데이터를 저장할 상태 변수
   const [newCar, setNewCar] = useState({
@@ -15,7 +14,7 @@ function App() {
 
   // 자동차 데이터 가져오기
   useEffect(() => {
-    fetch('http://capstone_server.railway.internal/api/cars') // Railway 서버 주소로 변경
+    fetch('https://capstoneserver-production.up.railway.app/api/cars')  // 서버 URL 수정
       .then(response => response.json())
       .then(data => setCars(data))
       .catch(error => console.error('Error fetching cars:', error));
@@ -23,7 +22,7 @@ function App() {
 
   // 자동차 추가
   const handleAddCar = () => {
-    fetch('http://capstone_server.railway.internal/api/cars', { // Railway 서버 주소로 변경
+    fetch('https://capstoneserver-production.up.railway.app/api/cars', {  // 서버 URL 수정
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newCar),
@@ -39,7 +38,7 @@ function App() {
 
   // 자동차 삭제
   const handleDeleteCar = (id) => {
-    fetch(`http://capstone_server.railway.internal/api/cars/${id}`, { method: 'DELETE' })  // Railway 서버 주소로 변경
+    fetch(`https://capstoneserver-production.up.railway.app/api/cars/${id}`, { method: 'DELETE' })  // 서버 URL 수정
       .then(response => response.json())
       .then(data => {
         alert(data.message);
@@ -50,7 +49,7 @@ function App() {
 
   // 자동차 목록 다시 가져오기
   const fetchCars = () => {
-    fetch('http://capstone_server.railway.internal/api/cars') // Railway 서버 주소로 변경
+    fetch('https://capstoneserver-production.up.railway.app/api/cars')  // 서버 URL 수정
       .then(response => response.json())
       .then(data => setCars(data))
       .catch(error => console.error('Error fetching cars:', error));
